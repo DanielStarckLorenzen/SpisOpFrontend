@@ -8,4 +8,6 @@ export type FoodPost = {
   description: string
   price: number
   author: User | Company
+  createdAt: Date
+  type: 'company' | 'community'
 }
