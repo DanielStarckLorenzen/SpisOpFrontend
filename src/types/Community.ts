@@ -8,3 +8,11 @@ export type CommunityGroup = {
   members?: User[]
   createdById: string
 }
+
+export type newCommunityGroup = {
+
+  name: string
+  members?: User[]
+  createdById: string
+
+}
