@@ -13,6 +13,6 @@ export type newCommunityGroup = {
 
   name: string
   members?: User[]
-  createdById: string
+  createdBy?: User | null
 
 }

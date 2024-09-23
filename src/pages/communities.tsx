@@ -2,21 +2,25 @@ import { Button } from '@chakra-ui/react';
 import { useEffect, useState } from "react";
 import {CommunityGroup, newCommunityGroup} from "../types/Community.ts";
 import { getUserCommunities, createCommunity } from "../api/communityApi.ts";
+import {User} from "../types/User.ts"
+import {getUser} from "../api/userApi.ts";
 
 const Communities = () => {
     const userId = sessionStorage.getItem("userId")?.replace(/"/g, '');
+    const [user, setUser] = useState<User | null>(null);
     const [communities, setCommunities] = useState<CommunityGroup[]>([]);
     useEffect(() => {
         if (!userId) {
             return
         }
+        getUser(userId).then((data) => setUser(data))
         getUserCommunities(userId).then((data) => setCommunities(data));
     }, []);
 
     const communityGroup : newCommunityGroup = {
 
-        name : "Whaaat",
-        createdById : "1",
+        name : "Opgang",
+        createdBy : user,
 
     }
 
