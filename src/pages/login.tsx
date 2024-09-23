@@ -1,31 +1,60 @@
 import { useState } from "react";
 import { Box, Button, FormControl, FormLabel, Input, Heading, Text, VStack, useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase.ts";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import {getUser} from "../api/userApi.ts";
+import {SignUpModal} from "../components/modals/signUpModal.tsx";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const toast = useToast();
-  const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Basic validation (you can expand this)
-    if (username === "user" && password === "password") {
-      sessionStorage.setItem("userId", "user1");
+    setIsLoading(true);
+    try {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          const user = await getUser(userCredential.user.uid);
+          if (user.error) {
+            toast({
+              title: "Cannot log in. Please try again.",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
+            return;
+          }
+          sessionStorage.setItem("userId", JSON.stringify(user.id));
+          toast({
+            title: "Logged in successfully!",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          toast({
+            title: "Cannot log in. Please try again.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+          console.error("Error logging in: ", error);
+        });
+    } catch (error) {
       toast({
-        title: "Login successful",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-      navigate("/dashboard"); // Redirect to the dashboard
-    } else {
-      toast({
-        title: "Invalid credentials",
+        title: "Cannot log in. Please try again.",
         status: "error",
-        duration: 2000,
+        duration: 3000,
         isClosable: true,
       });
+      console.error("Error logging in: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,17 +75,19 @@ const Login = () => {
         boxShadow="md"
         borderRadius="md"
       >
-        <Heading as="h2" size="lg" textAlign="center" mb={6}>
-          Login
-        </Heading>
-        <VStack spacing={4} align="stretch">
-          <FormControl id="username">
-            <FormLabel>Username</FormLabel>
+        <VStack spacing={6}>
+          <Heading size="xl" textAlign="center">
+            Login
+          </Heading>
+          <Text textAlign="center" color="gray.500">
+            Enter your email and password to access your account.
+          </Text>
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
             <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
           <FormControl id="password">
@@ -65,17 +96,38 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
             />
           </FormControl>
-          <Button colorScheme="blue" onClick={handleLogin} width="full">
+          <Button
+            isLoading={isLoading}
+            loadingText="Logging in..."
+            colorScheme="teal"
+            onClick={handleLogin}
+          >
             Login
           </Button>
+          {/* Register link */}
+          <Text fontSize="sm">
+            Don't have an account?{" "}
+            <Button
+              variant="link"
+              colorScheme="teal"
+              onClick={() => setSignUpModalOpen(true)}
+            >
+              Register
+            </Button>
+          </Text>
         </VStack>
-        <Text mt={4} textAlign="center" fontSize="sm" color="gray.600">
-          Use <strong>user</strong> and <strong>password</strong> to log in.
-        </Text>
       </Box>
+      {signUpModalOpen &&
+        <SignUpModal
+          isOpen={signUpModalOpen}
+          onClose={() => setSignUpModalOpen(false)}
+          login={() => handleLogin()}
+          setLoginEmail={setEmail}
+          setLoginPassword={setPassword}
+        />
+      }
     </Box>
   );
 };
