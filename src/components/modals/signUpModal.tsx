@@ -71,7 +71,7 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       username: formValues.userName,
-      isAdmin: false
+      admin: false
     }
 
     postUser(newUser).then(() => {
