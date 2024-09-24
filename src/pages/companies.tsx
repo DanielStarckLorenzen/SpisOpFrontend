@@ -1,6 +1,11 @@
+import {User} from "../types/User.ts";
 
+export type CompaniesProps = {
+  user: User;
+}
 
-const Companies = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Companies = ({user}: CompaniesProps) => {
 
   return (
     <div>

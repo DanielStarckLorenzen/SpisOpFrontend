@@ -5,31 +5,49 @@ import Companies from "./pages/companies.tsx";
 import Communities from "./pages/communities.tsx";
 import MyProfile from "./pages/myProfile.tsx";
 import Login from "./pages/login.tsx";
+import { useEffect, useState } from "react";
+import { User } from "./types/User.ts";
+import { getUser } from "./api/userApi.ts";
 
 function App() {
-  const userId = sessionStorage.getItem('userId');
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const userId = sessionStorage.getItem("userId")?.replace(/"/g, "");
+    if (userId) {
+      getUser(userId).then((userData) => {
+        setUser(userData);
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Router>
-      {/* Conditionally render Navbar if user is logged in */}
-      {userId && <Navbar />}
+      {user && <Navbar user={user} />}
 
       <Routes>
-        {/* Protecting the dashboard and other routes if the user is not logged in */}
-        {userId ? (
+        {user ? (
           <>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/companies" element={<Companies />} />
-            <Route path="/community" element={<Communities />} />
-            <Route path="/myProfile" element={<MyProfile />} />
-            <Route path="*" element={<Dashboard />} /> {/* Fallback route */}
+            <Route path="/dashboard" element={<Dashboard user={user} />} />
+            <Route path="/companies" element={<Companies user={user} />} />
+            <Route path="/community" element={<Communities user={user} />} />
+            <Route path="/myProfile" element={<MyProfile user={user} />} />
+            <Route path="*" element={<Navigate to="/dashboard" />} /> {/* Fallback route */}
           </>
         ) : (
-          // If not logged in, redirect to login page
-          <Route path="*" element={<Navigate to="/login" />} />
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Navigate to="/login" />} /> {/* Redirect to login if not logged in */}
+          </>
         )}
-        {/* Login page should be accessible even if the user is not logged in */}
-        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

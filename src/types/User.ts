@@ -7,6 +7,6 @@ export type User = {
   profilePicture?: string;
   followingCommunityGroupIds?: string[]
   followingCompanyIds?: string[]
-  isAdmin: boolean
+  admin: boolean
   managingCompanyIds?: string[]
 }

@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { User } from "../types/User";
-import { getUser } from "../api/userApi";
 import {
   Box,
   Heading,
@@ -10,19 +9,12 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-const MyProfile = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+export type MyProfileProps = {
+  user: User;
+};
 
-  useEffect(() => {
-    const userId = sessionStorage.getItem("userId")?.replace(/"/g, '');
-    if (userId) {
-      getUser(userId).then((userData) => {
-        setUser(userData);
-        setLoading(false);
-      });
-    }
-  }, []);
+const MyProfile = ({ user }: MyProfileProps) => {
+  const [loading, ] = useState(false);
 
   if (loading) {
     return (

@@ -3,8 +3,14 @@ import {DollarSignIcon} from "lucide-react";
 import { getAllFoodPosts } from "../api/foodPostApi.ts";
 import {useEffect, useState} from "react";
 import {FoodPost} from "../types/FoodPost.ts";
+import {User} from "../types/User.ts";
 
-const Dashboard = () => {
+export type DashboardProps = {
+  user: User;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Dashboard = ({ user }: DashboardProps) => {
   const [posts, setPosts] = useState<FoodPost[]>([]);
 
   useEffect(() => {

@@ -1,21 +1,29 @@
 import { Button } from '@chakra-ui/react';
 import { useEffect, useState } from "react";
 import {CommunityGroup, newCommunityGroup} from "../types/Community.ts";
-import { getUserCommunities, createCommunity } from "../api/communityApi.ts";
+import {getUserCommunities, createCommunity, getAllCommunities} from "../api/communityApi.ts";
 import {User} from "../types/User.ts"
-import {getUser} from "../api/userApi.ts";
 
-const Communities = () => {
+export type CommunitiesProps = {
+    user: User;
+}
+
+const Communities = ({user}: CommunitiesProps) => {
     const userId = sessionStorage.getItem("userId")?.replace(/"/g, '');
-    const [user, setUser] = useState<User | null>(null);
     const [communities, setCommunities] = useState<CommunityGroup[]>([]);
     useEffect(() => {
         if (!userId) {
             return
         }
-        getUser(userId).then((data) => setUser(data))
-        getUserCommunities(userId).then((data) => setCommunities(data));
-    }, []);
+
+        if (!user.admin) {
+            console.log(user);
+            getUserCommunities(userId).then((data) => setCommunities(data));
+        } else {
+            getAllCommunities().then((data) => setCommunities(data));
+        }
+
+    }, [user, userId]);
 
     const communityGroup : newCommunityGroup = {
 

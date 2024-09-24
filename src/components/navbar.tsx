@@ -1,9 +1,14 @@
 import { SearchIcon } from '@chakra-ui/icons';
-import { Container, Flex, HStack, IconButton, Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import {Container, Flex, HStack, IconButton, Input, InputGroup, InputLeftElement, Text} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import {UserIcon} from "lucide-react";
+import {User} from "../types/User.ts";
 
-const Navbar = () => {
+export type NavbarProps = {
+  user: User;
+}
+
+const Navbar = ({ user }: NavbarProps) => {
   return (
     <Flex as="header" bg="white" shadow="md" position="sticky" top={0} zIndex={10} py={4}>
       <Container maxW="container.xl">
@@ -14,6 +19,9 @@ const Navbar = () => {
             <Link to="/community">Community</Link>
           </HStack>
           <HStack spacing={4}>
+            {user.admin && (
+              <Text fontStyle="italic">Admin View</Text>
+            )}
             <InputGroup>
               <InputLeftElement pointerEvents="none">
                 <SearchIcon color="gray.300" />

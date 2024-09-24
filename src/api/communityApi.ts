@@ -6,10 +6,17 @@ export const getCommunity = async (id : number) => {
     const response = await fetch(`${BASE_URL}/community/${id}`);
     return response.json();
 }
+
+export const getAllCommunities = async () => {
+    const response = await fetch(`${BASE_URL}/communities`);
+    return response.json();
+}
+
 export const getUserCommunities = async (id: string) => {
     const response = await fetch(`${BASE_URL}/user/${id}/communities`);
     return response.json();
 }
+
 export const createCommunity = async (community: newCommunityGroup) => {
     const response = await fetch(`${BASE_URL}/community`, {
         method: 'POST',
