@@ -36,8 +36,8 @@ function App() {
       <Routes>
         {user ? (
           <>
-            <Route path="/dashboard" element={<Dashboard user={user} />} />
-            <Route path="/companies" element={<Companies user={user} />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/companies" element={<Companies />} />
             <Route path="/community" element={<Communities user={user} />} />
             <Route path="/myProfile" element={<MyProfile user={user} />} />
             <Route path="*" element={<Navigate to="/dashboard" />} /> {/* Fallback route */}

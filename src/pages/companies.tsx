@@ -4,8 +4,7 @@ export type CompaniesProps = {
   user: User;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Companies = ({user}: CompaniesProps) => {
+const Companies = () => {
 
   return (
     <div>
