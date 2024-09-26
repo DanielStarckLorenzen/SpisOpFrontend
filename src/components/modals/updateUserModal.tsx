@@ -27,7 +27,8 @@ export function UpdateUserModal({ user, isOpen, onClose }: UpdateUserModalProps)
         firstName: user.firstName,
         lastName: user.lastName,
         userName: user.username,
-        email: user.email
+        email: user.email,
+        profilePicture: user.profilePicture,
     });
 
     const toast = useToast();
@@ -46,6 +47,7 @@ export function UpdateUserModal({ user, isOpen, onClose }: UpdateUserModalProps)
             lastName: formValues.lastName,
             username: formValues.userName,
             email: formValues.email,
+            profilePicture: formValues.profilePicture
         };
         putUser(updatedUser).then(() => {
             toast({
@@ -104,6 +106,13 @@ export function UpdateUserModal({ user, isOpen, onClose }: UpdateUserModalProps)
                             type="email"
                             value={formValues.email}
                             onChange={(e) => handleInputChange("email", e.target.value)}
+                        />
+                    </FormControl>
+                    <FormControl mb={4}>
+                        <FormLabel>Profile picture URL</FormLabel>
+                        <Input
+                            value={formValues.profilePicture}
+                            onChange={(e) => handleInputChange("profilePicture", e.target.value)}
                         />
                     </FormControl>
                 </ModalBody>

@@ -1,20 +1,25 @@
 import {newCommunityGroup} from "../types/Community.ts";
+import { checkResponse } from "./utils/checkResponse.ts";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getCommunity = async (id : number) => {
     const response = await fetch(`${BASE_URL}/community/${id}`);
-    return response.json();
+    return checkResponse(response);
 }
 
 export const getAllCommunities = async () => {
     const response = await fetch(`${BASE_URL}/communities`);
-    return response.json();
+    return checkResponse(response);
 }
 
 export const getUserCommunities = async (id: string) => {
     const response = await fetch(`${BASE_URL}/user/${id}/communities`);
-    return response.json();
+    return checkResponse(response);
+}
+export const getUserOwnedCommunities = async (id: string) => {
+    const response = await fetch(`${BASE_URL}/user/${id}/owmed_communities`);
+    return checkResponse(response);
 }
 
 export const createCommunity = async (community: newCommunityGroup) => {
@@ -26,8 +31,5 @@ export const createCommunity = async (community: newCommunityGroup) => {
         body: JSON.stringify(community),
     });
 
-    if (!response.ok) {
-        throw new Error('Failed to create community');
-    }
-    return response.json();
+    return checkResponse(response);
 };
