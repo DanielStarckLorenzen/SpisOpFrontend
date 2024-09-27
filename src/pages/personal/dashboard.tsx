@@ -1,9 +1,9 @@
 import { Badge, Box, Button, Container, Flex, Heading, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack, Avatar } from '@chakra-ui/react';
 import {DollarSignIcon} from "lucide-react";
-import { getAllFoodPosts } from "../api/foodPostApi.ts";
+import { getAllFoodPosts } from "../../api/foodPostApi.ts";
 import {useEffect, useState} from "react";
-import {FoodPost} from "../types/FoodPost.ts";
-import {User} from "../types/User.ts";
+import {FoodPost} from "../../types/FoodPost.ts";
+import {User} from "../../types/User.ts";
 
 export type DashboardProps = {
   user: User;

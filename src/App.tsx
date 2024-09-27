@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar.tsx";
-import Dashboard from "./pages/dashboard.tsx";
-import Companies from "./pages/companies.tsx";
-import Communities from "./pages/communities.tsx";
-import MyProfile from "./pages/myProfile.tsx";
+import Dashboard from "./pages/personal/dashboard.tsx";
+import Companies from "./pages/personal/companies.tsx";
+import Communities from "./pages/personal/communities.tsx";
+import MyProfile from "./pages/personal/myProfile.tsx";
 import Login from "./pages/login.tsx";
+import SingleCommunity from "./pages/community.tsx";
 import { useEffect, useState } from "react";
 import { User } from "./types/User.ts";
 import { getUser } from "./api/userApi.ts";
@@ -48,6 +49,7 @@ function App() {
             <Route path="*" element={<Navigate to="/login" />} /> {/* Redirect to login if not logged in */}
           </>
         )}
+        <Route path="/community/:communityId" element={<SingleCommunity />} />
       </Routes>
     </Router>
   );

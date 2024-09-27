@@ -1,8 +1,9 @@
 import { Box, Button, Heading, Text, VStack, HStack, Container, useToast, SimpleGrid } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { CommunityGroup, newCommunityGroup } from "../types/Community.ts";
-import { getUserCommunities, createCommunity, getUserOwnedCommunities } from "../api/communityApi.ts";
-import { User } from "../types/User.ts";
+import { CommunityGroup, newCommunityGroup } from "../../types/Community.ts";
+import { getUserCommunities, createCommunity, getUserOwnedCommunities } from "../../api/communityApi.ts";
+import { User } from "../../types/User.ts";
 
 export type CommunitiesProps = {
     user: User;
@@ -67,9 +68,11 @@ const Communities = ({ user }: CommunitiesProps) => {
                                         boxShadow="md"
                                         bg="white"
                                     >
-                                        <Heading as="h4" size="md" mb={2}>
-                                            {community.name}
-                                        </Heading>
+                                        <Link to={`/community/${community.id}`}>
+                                            <Heading as="h4" size="md" mb={2} color="blue.500" _hover={{ textDecoration: 'underline' }}>
+                                                {community.name}
+                                            </Heading>
+                                        </Link>
                                         <Text fontSize="sm">ID: {community.id}</Text>
                                     </Box>
                                 ))}
@@ -93,9 +96,11 @@ const Communities = ({ user }: CommunitiesProps) => {
                                         boxShadow="md"
                                         bg="white"
                                     >
-                                        <Heading as="h4" size="md" mb={2}>
-                                            {community.name}
-                                        </Heading>
+                                        <Link to={`/community/${community.id}`}>
+                                            <Heading as="h4" size="md" mb={2} color="blue.500" _hover={{ textDecoration: 'underline' }}>
+                                                {community.name}
+                                            </Heading>
+                                        </Link>
                                         <Text fontSize="sm">ID: {community.id}</Text>
                                     </Box>
                                 ))}
