@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { View } from "lucide-react";
+import { useState } from 'react';
+import { View } from 'lucide-react';
 import {
   Modal,
   ModalOverlay,
@@ -13,11 +13,12 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  InputRightElement, useToast,
-} from "@chakra-ui/react";
-import { createUserWithEmailAndPassword, User } from "firebase/auth";
-import { auth } from "../../../firebase.ts";
-import {postUser} from "../../api/userApi.ts";
+  InputRightElement,
+  useToast,
+} from '@chakra-ui/react';
+import { createUserWithEmailAndPassword, User } from 'firebase/auth';
+import { auth } from '../../../firebase.ts';
+import { postUser } from '../../api/userApi.ts';
 
 export type SignUpModalProps = {
   isOpen: boolean;
@@ -27,13 +28,19 @@ export type SignUpModalProps = {
   setLoginPassword: (password: string) => void;
 };
 
-export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPassword }: SignUpModalProps) {
+export function SignUpModal({
+  isOpen,
+  onClose,
+  login,
+  setLoginEmail,
+  setLoginPassword,
+}: SignUpModalProps) {
   const [formValues, setFormValues] = useState({
-    firstName: "",
-    lastName: "",
-    userName: "",
-    email: "",
-    password: ""
+    firstName: '',
+    lastName: '',
+    userName: '',
+    email: '',
+    password: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +49,7 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
   const handleInputChange = (key: string, value: string) => {
     setFormValues({
       ...formValues,
-      [key]: value
+      [key]: value,
     });
   };
 
@@ -51,15 +58,25 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
   };
 
   const saveUser = () => {
-    if (formValues.firstName && formValues.lastName && formValues.userName && formValues.email && formValues.password) {
-      createUserWithEmailAndPassword(auth, formValues.email, formValues.password)
+    if (
+      formValues.firstName &&
+      formValues.lastName &&
+      formValues.userName &&
+      formValues.email &&
+      formValues.password
+    ) {
+      createUserWithEmailAndPassword(
+        auth,
+        formValues.email,
+        formValues.password
+      )
         .then((userCredential) => {
           const user = userCredential.user;
           createUser(user);
           onClose();
         })
         .catch((error) => {
-          console.error("Error creating user: ", error);
+          console.error('Error creating user: ', error);
         });
     }
   };
@@ -71,30 +88,32 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
       firstName: formValues.firstName,
       lastName: formValues.lastName,
       username: formValues.userName,
-      admin: false
-    }
+      admin: false,
+    };
 
-    postUser(newUser).then(() => {
-      toast({
-        title: "User created successfully!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
+    postUser(newUser)
+      .then(() => {
+        toast({
+          title: 'User created successfully!',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+        setLoginEmail(formValues.email);
+        setLoginPassword(formValues.password);
+        login();
+        onClose();
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error creating user in database: ' + error.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+        console.error('Error creating user in database: ', error);
       });
-      setLoginEmail(formValues.email);
-      setLoginPassword(formValues.password);
-      login();
-      onClose();
-    }).catch(error => {
-      toast({
-        title: "Error creating user in database: " + error.message,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      console.error("Error creating user in database: ", error);
-    });
-  }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -108,7 +127,7 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
             <Input
               placeholder="Enter your first name"
               value={formValues.firstName}
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
+              onChange={(e) => handleInputChange('firstName', e.target.value)}
             />
           </FormControl>
 
@@ -117,7 +136,7 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
             <Input
               placeholder="Enter your last name"
               value={formValues.lastName}
-              onChange={(e) => handleInputChange("lastName", e.target.value)}
+              onChange={(e) => handleInputChange('lastName', e.target.value)}
             />
           </FormControl>
 
@@ -126,7 +145,7 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
             <Input
               placeholder="Enter your username"
               value={formValues.userName}
-              onChange={(e) => handleInputChange("userName", e.target.value)}
+              onChange={(e) => handleInputChange('userName', e.target.value)}
             />
           </FormControl>
 
@@ -136,7 +155,7 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
               placeholder="Enter your email"
               type="email"
               value={formValues.email}
-              onChange={(e) => handleInputChange("email", e.target.value)}
+              onChange={(e) => handleInputChange('email', e.target.value)}
             />
           </FormControl>
 
@@ -145,13 +164,17 @@ export function SignUpModal({ isOpen, onClose, login, setLoginEmail, setLoginPas
             <InputGroup>
               <Input
                 placeholder="Enter your password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 value={formValues.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
+                onChange={(e) => handleInputChange('password', e.target.value)}
               />
               <InputRightElement>
-                <Button h="1.75rem" size="sm" onClick={togglePasswordVisibility}>
-                  {showPassword ? <View /> : "Show"}
+                <Button
+                  h="1.75rem"
+                  size="sm"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <View /> : 'Show'}
                 </Button>
               </InputRightElement>
             </InputGroup>

@@ -1,13 +1,13 @@
-import {User} from "./User.ts";
-import {Company} from "./Company.ts";
+import { User } from './User.ts';
+import { Company } from './Company.ts';
 
 export type FoodPost = {
-  id: string
-  image: string
-  title: string
-  description: string
-  price: number
-  author: User | Company
-  createdAt: Date
-  type: 'company' | 'community'
-}
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  price: number;
+  author: User | Company;
+  createdAt: Date;
+  type: 'company' | 'community';
+};
