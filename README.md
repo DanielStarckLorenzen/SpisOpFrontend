@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# Spis Op Frontend
+This is the frontend for the Spis Op project. It is built using React and TypeScript.
+To use with backend you need to have the backend running locally on port 8080.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Installation
+Create a .env file in the root of the project and add the following line:
+```VITE_BASE_URL="your-backend-url"```
 
-Currently, two official plugins are available:
+## Running the project
+To run the project on http://localhost:5173 run the following command:
+```npm run dev```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Formatting with Prettier
+To perform a prettier formatting run the following command:
+```npm run format```
 
-## Expanding the ESLint configuration
+## Git commands
+To creating a new branch run the following command:
+```git checkout -b "branch-name"```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To add all files to the staging area run the following command:
+```git add .```
 
-- Configure the top-level `parserOptions` property like this:
+To commit the files in the staging area run the following command:
+```git commit -m "Your commit message"```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+To push the committed files to the remote repository run the following command:
+```git push```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+To pull the latest changes from the remote repository run the following command:
+```git pull```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
-```
+To switch to a different branch or master branch run the following command:
+```git checkout "branch-name"``` or ```git checkout master```
