@@ -1,4 +1,4 @@
-import { User } from '../types/User.ts';
+import { User } from '../../types/User.ts';
 
 export type CompaniesProps = {
   user: User;

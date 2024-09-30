@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { User } from '../types/User';
-import { deleteUser } from '../api/userApi.ts';
-import { UpdateUserModal } from '../components/modals/updateUserModal.tsx';
+import { User } from '../../types/User.ts';
+import { deleteUser } from '../../api/userApi.ts';
+import { UpdateUserModal } from '../../components/modals/updateUserModal.tsx';
 import {
   Box,
   Heading,
