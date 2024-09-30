@@ -6,8 +6,8 @@ import { getUserCommunities, createCommunity, getUserOwnedCommunities } from "..
 import { User } from "../../types/User.ts";
 
 export type CommunitiesProps = {
-    user: User;
-}
+  user: User;
+};
 
 const Communities = ({ user }: CommunitiesProps) => {
     const userId = sessionStorage.getItem("userId")?.replace(/"/g, '');

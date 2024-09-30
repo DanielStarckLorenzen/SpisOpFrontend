@@ -5,8 +5,8 @@ export type User = {
   email: string;
   username: string;
   profilePicture?: string;
-  followingCommunityGroupIds?: string[]
-  followingCompanyIds?: string[]
-  admin?: boolean
-  managingCompanyIds?: string[]
-}
+  followingCommunityGroupIds?: string[];
+  followingCompanyIds?: string[];
+  admin?: boolean;
+  managingCompanyIds?: string[];
+};
