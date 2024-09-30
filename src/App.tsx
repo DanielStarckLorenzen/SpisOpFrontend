@@ -13,7 +13,7 @@ import Login from './pages/login.tsx';
 import { useEffect, useState } from 'react';
 import { User } from './types/User.ts';
 import { getUser } from './api/userApi.ts';
-import SingleCommunity from "./pages/community.tsx";
+import SingleCommunity from './pages/community.tsx';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -56,7 +56,10 @@ function App() {
             {/* Redirect to login if not logged in */}
           </>
         )}
-        <Route path="/community/:communityId" element={<SingleCommunity />} />
+        <Route
+          path="/community/:communityId"
+          element={<SingleCommunity user={user} />}
+        />
       </Routes>
     </Router>
   );
