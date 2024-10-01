@@ -56,7 +56,7 @@ const Communities = ({ user }: CommunitiesProps) => {
         duration: 5000,
         isClosable: true,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'There was an issue creating the community.',
