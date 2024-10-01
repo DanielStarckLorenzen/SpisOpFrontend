@@ -46,6 +46,10 @@ function App() {
             <Route path="/companies" element={<Companies />} />
             <Route path="/community" element={<Communities user={user} />} />
             <Route path="/myProfile" element={<MyProfile user={user} />} />
+            <Route
+              path="/community/:communityId"
+              element={<SingleCommunity user={user} />}
+            />
             <Route path="*" element={<Navigate to="/dashboard" />} />{' '}
             {/* Fallback route */}
           </>
@@ -56,10 +60,6 @@ function App() {
             {/* Redirect to login if not logged in */}
           </>
         )}
-        <Route
-          path="/community/:communityId"
-          element={<SingleCommunity user={user} />}
-        />
       </Routes>
     </Router>
   );

@@ -19,7 +19,7 @@ import { CreateFoodPostModal } from '../components/modals/createFoodPostModal.ts
 import { User } from '../types/User.ts';
 
 export type SingleCommunityProps = {
-  user: User | null;
+  user: User;
 };
 const SingleCommunity = ({ user }: SingleCommunityProps) => {
   const { communityId } = useParams(); // Get the communityId from the URL
