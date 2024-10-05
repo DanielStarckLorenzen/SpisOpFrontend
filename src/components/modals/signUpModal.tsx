@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useState } from 'react';
 import { View } from 'lucide-react';
 import {
@@ -20,6 +21,7 @@ import { createUserWithEmailAndPassword, User } from 'firebase/auth';
 import { auth } from '../../../firebase.ts';
 import { postUser } from '../../api/userApi.ts';
 
+// Define props for SignUpModal component
 export type SignUpModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -28,6 +30,7 @@ export type SignUpModalProps = {
   setLoginPassword: (password: string) => void;
 };
 
+// SignUpModal component
 export function SignUpModal({
   isOpen,
   onClose,
@@ -35,6 +38,7 @@ export function SignUpModal({
   setLoginEmail,
   setLoginPassword,
 }: SignUpModalProps) {
+  // State to manage form values
   const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
@@ -43,9 +47,12 @@ export function SignUpModal({
     password: '',
   });
 
+  // State to toggle password visibility
   const [showPassword, setShowPassword] = useState(false);
+  // Hook to display toast notifications
   const toast = useToast();
 
+  // Handle input changes for form fields
   const handleInputChange = (key: string, value: string) => {
     setFormValues({
       ...formValues,
@@ -53,10 +60,12 @@ export function SignUpModal({
     });
   };
 
+  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  // Save user to Firebase Authentication
   const saveUser = () => {
     if (
       formValues.firstName &&
@@ -81,6 +90,7 @@ export function SignUpModal({
     }
   };
 
+  // Create user in the database
   const createUser = (user: User) => {
     const newUser = {
       id: user.uid,
@@ -93,18 +103,21 @@ export function SignUpModal({
 
     postUser(newUser)
       .then(() => {
+        // Display success toast
         toast({
           title: 'User created successfully!',
           status: 'success',
           duration: 3000,
           isClosable: true,
         });
+        // Set login credentials and perform login
         setLoginEmail(formValues.email);
         setLoginPassword(formValues.password);
         login();
         onClose();
       })
       .catch((error) => {
+        // Display error toast
         toast({
           title: 'Error creating user in database: ' + error.message,
           status: 'error',
@@ -115,6 +128,7 @@ export function SignUpModal({
       });
   };
 
+  // Render the SignUpModal component
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -122,6 +136,7 @@ export function SignUpModal({
         <ModalHeader>Sign Up</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          {/* First Name input */}
           <FormControl isRequired mb={4}>
             <FormLabel>First Name</FormLabel>
             <Input
@@ -131,6 +146,7 @@ export function SignUpModal({
             />
           </FormControl>
 
+          {/* Last Name input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Last Name</FormLabel>
             <Input
@@ -140,6 +156,7 @@ export function SignUpModal({
             />
           </FormControl>
 
+          {/* Username input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Username</FormLabel>
             <Input
@@ -149,6 +166,7 @@ export function SignUpModal({
             />
           </FormControl>
 
+          {/* Email input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Email</FormLabel>
             <Input
@@ -159,6 +177,7 @@ export function SignUpModal({
             />
           </FormControl>
 
+          {/* Password input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Password</FormLabel>
             <InputGroup>
@@ -182,9 +201,11 @@ export function SignUpModal({
         </ModalBody>
 
         <ModalFooter>
+          {/* Sign Up button */}
           <Button colorScheme="blue" mr={3} onClick={saveUser}>
             Sign Up
           </Button>
+          {/* Cancel button */}
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>

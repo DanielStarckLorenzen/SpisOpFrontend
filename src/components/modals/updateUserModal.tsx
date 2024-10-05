@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useState } from 'react';
 import { User } from '../../types/User.ts';
 import {
@@ -16,17 +17,20 @@ import {
 } from '@chakra-ui/react';
 import { putUser } from '../../api/userApi.ts';
 
+// Define props for UpdateUserModal component
 export type UpdateUserModalProps = {
   user: User;
   isOpen: boolean;
   onClose: () => void;
 };
 
+// UpdateUserModal component
 export function UpdateUserModal({
   user,
   isOpen,
   onClose,
 }: UpdateUserModalProps) {
+  // State to manage form values
   const [formValues, setFormValues] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
@@ -35,8 +39,10 @@ export function UpdateUserModal({
     profilePicture: user.profilePicture,
   });
 
+  // Hook to display toast notifications
   const toast = useToast();
 
+  // Handle input changes for form fields
   const handleInputChange = (key: string, value: string) => {
     setFormValues({
       ...formValues,
@@ -44,7 +50,9 @@ export function UpdateUserModal({
     });
   };
 
+  // Function to update user information
   const updateUser = () => {
+    // Prepare updated user object
     const updatedUser: User = {
       id: user.id,
       firstName: formValues.firstName,
@@ -53,8 +61,10 @@ export function UpdateUserModal({
       email: formValues.email,
       profilePicture: formValues.profilePicture,
     };
+    // Call API to update user
     putUser(updatedUser)
       .then(() => {
+        // Show success toast
         toast({
           title: 'User updated successfully!',
           status: 'success',
@@ -62,9 +72,11 @@ export function UpdateUserModal({
           isClosable: true,
         });
         onClose();
+        // Redirect to user profile page
         window.location.href = '/myProfile';
       })
       .catch((error) => {
+        // Show error toast
         toast({
           title: 'Error updating user: ' + error.message,
           status: 'error',
@@ -75,6 +87,7 @@ export function UpdateUserModal({
       });
   };
 
+  // Render the modal
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -82,6 +95,7 @@ export function UpdateUserModal({
         <ModalHeader>Update</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          {/* Form controls for user information */}
           <FormControl isRequired mb={4}>
             <FormLabel>First Name</FormLabel>
             <Input
@@ -126,6 +140,7 @@ export function UpdateUserModal({
         </ModalBody>
 
         <ModalFooter>
+          {/* Update and Cancel buttons */}
           <Button colorScheme="blue" mr={3} onClick={updateUser}>
             Update
           </Button>

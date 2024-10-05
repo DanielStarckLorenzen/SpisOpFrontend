@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useState } from 'react';
 import {
   Modal,
@@ -18,6 +19,7 @@ import { createFoodPost } from '../../api/foodPostApi.ts';
 import { User } from '../../types/User.ts';
 import { newFoodPost } from '../../types/FoodPost.ts';
 
+// Define the props for the CreateFoodPostModal component
 export type CreateFoodPostModalProps = {
   communityId: number;
   authorUser: User;
@@ -25,13 +27,14 @@ export type CreateFoodPostModalProps = {
   onClose: () => void;
 };
 
+// CreateFoodPostModal component
 export function CreateFoodPostModal({
   communityId,
   authorUser,
   isOpen,
   onClose,
 }: CreateFoodPostModalProps) {
-  // Form values for creating a new food post
+  // State to manage form values
   const [formValues, setFormValues] = useState({
     title: '',
     description: '',
@@ -40,6 +43,7 @@ export function CreateFoodPostModal({
     allergies: '', // A comma-separated string of allergies
   });
 
+  // Hook to display toast notifications
   const toast = useToast();
 
   // Handle input changes for form fields
@@ -50,8 +54,9 @@ export function CreateFoodPostModal({
     });
   };
 
-  // Create food post function
+  // Function to create a new food post
   const create = () => {
+    // Prepare the new food post object
     const newPost: newFoodPost = {
       title: formValues.title,
       description: formValues.description,
@@ -65,8 +70,10 @@ export function CreateFoodPostModal({
         .map((allergy) => allergy.trim()), // Convert comma-separated string to array
     };
 
+    // Call the API to create the food post
     createFoodPost(newPost)
       .then(() => {
+        // Display success toast and close the modal
         toast({
           title: 'Food post created successfully!',
           status: 'success',
@@ -76,6 +83,7 @@ export function CreateFoodPostModal({
         onClose();
       })
       .catch((error) => {
+        // Display error toast and log the error
         toast({
           title: 'Error creating food post: ' + error.message,
           status: 'error',
@@ -86,6 +94,7 @@ export function CreateFoodPostModal({
       });
   };
 
+  // Render the modal
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -93,6 +102,7 @@ export function CreateFoodPostModal({
         <ModalHeader>Create New Food Post</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
+          {/* Title input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Title</FormLabel>
             <Input
@@ -102,6 +112,7 @@ export function CreateFoodPostModal({
             />
           </FormControl>
 
+          {/* Description input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Description</FormLabel>
             <Textarea
@@ -111,6 +122,7 @@ export function CreateFoodPostModal({
             />
           </FormControl>
 
+          {/* Image URL input */}
           <FormControl mb={4}>
             <FormLabel>Image URL</FormLabel>
             <Input
@@ -120,6 +132,7 @@ export function CreateFoodPostModal({
             />
           </FormControl>
 
+          {/* Price input */}
           <FormControl isRequired mb={4}>
             <FormLabel>Price</FormLabel>
             <Input
@@ -132,6 +145,7 @@ export function CreateFoodPostModal({
             />
           </FormControl>
 
+          {/* Allergies input */}
           <FormControl mb={4}>
             <FormLabel>Allergies (comma-separated)</FormLabel>
             <Input
@@ -143,9 +157,11 @@ export function CreateFoodPostModal({
         </ModalBody>
 
         <ModalFooter>
+          {/* Create button */}
           <Button colorScheme="blue" mr={3} onClick={create}>
             Create
           </Button>
+          {/* Cancel button */}
           <Button variant="ghost" onClick={onClose}>
             Cancel
           </Button>

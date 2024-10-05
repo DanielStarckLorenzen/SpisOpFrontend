@@ -7,4 +7,5 @@ export type Company = {
   posts?: FoodPost[];
   address: string;
   managers: User[];
+  description: string;
 };

@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useState } from 'react';
 import { User } from '../../types/User.ts';
 import { deleteUser } from '../../api/userApi.ts';
@@ -13,29 +14,38 @@ import {
   useToast,
 } from '@chakra-ui/react';
 
+// Define props for MyProfile component
 export type MyProfileProps = {
   user: User;
 };
 
+// MyProfile component
 const MyProfile = ({ user }: MyProfileProps) => {
+  // State for loading indicator
   const [loading] = useState(false);
+  // Hook for displaying toast notifications
   const toast = useToast();
+  // State for controlling the visibility of the update modal
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
+  // Function to delete the user's account
   const deleteSelf = () => {
     deleteUser(user.id)
       .then(() => {
+        // Show success toast on successful deletion
         toast({
           title: 'User deleted successfully!',
           status: 'success',
           duration: 3000,
           isClosable: true,
         });
-        // Clear session storage and redirect to login, this doesnt work tho
+        // Clear session storage and redirect to login page
+        // Note: This redirection doesn't work as expected
         sessionStorage.removeItem('userId');
         window.location.href = '/login';
       })
       .catch((error) => {
+        // Show error toast if deletion fails
         toast({
           title: error,
           status: 'error',
@@ -45,6 +55,7 @@ const MyProfile = ({ user }: MyProfileProps) => {
       });
   };
 
+  // Show loading spinner while data is being fetched
   if (loading) {
     return (
       <Center h="100vh">
@@ -53,6 +64,7 @@ const MyProfile = ({ user }: MyProfileProps) => {
     );
   }
 
+  // Show message if no user data is found
   if (!user) {
     return (
       <Center h="100vh">
@@ -61,8 +73,10 @@ const MyProfile = ({ user }: MyProfileProps) => {
     );
   }
 
+  // Render user profile
   return (
     <Center py={6}>
+      {/* User information box */}
       <Box
         maxW="320px"
         w="full"
@@ -80,6 +94,7 @@ const MyProfile = ({ user }: MyProfileProps) => {
           {user.email}
         </Text>
       </Box>
+      {/* User actions box */}
       <Box
         maxW="320px"
         w="full"
@@ -89,9 +104,11 @@ const MyProfile = ({ user }: MyProfileProps) => {
         p={6}
         textAlign="center"
       >
+        {/* Button to open update modal */}
         <Button onClick={() => setUpdateModalOpen(true)}>
           Update your profile
         </Button>
+        {/* Render UpdateUserModal when updateModalOpen is true */}
         {updateModalOpen && (
           <UpdateUserModal
             user={user}
@@ -100,6 +117,7 @@ const MyProfile = ({ user }: MyProfileProps) => {
           />
         )}
 
+        {/* Button to delete user profile */}
         <Button
           onClick={() => {
             if (

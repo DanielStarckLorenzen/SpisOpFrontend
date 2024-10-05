@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -12,25 +13,37 @@ import { useEffect, useState } from 'react';
 import { getCommunity } from '../api/communityApi.ts';
 import { getFoodPostsByCommunity } from '../api/foodPostApi.ts';
 
+// Import custom types
 import { CommunityGroup } from '../types/Community.ts';
 import { FoodPost } from '../types/FoodPost.ts';
 import { useToast } from '@chakra-ui/react';
 import { CreateFoodPostModal } from '../components/modals/createFoodPostModal.tsx';
 import { User } from '../types/User.ts';
 
+// Define props for SingleCommunity component
 export type SingleCommunityProps = {
   user: User;
 };
+
+// SingleCommunity component
 const SingleCommunity = ({ user }: SingleCommunityProps) => {
-  const { communityId } = useParams(); // Get the communityId from the URL
+  // Get the communityId from the URL parameters
+  const { communityId } = useParams();
+  
+  // State for storing community and food posts data
   const [community, setCommunity] = useState<CommunityGroup>();
   const [foodPosts, setFoodPosts] = useState<FoodPost[]>([]);
 
+  // State for controlling the visibility of the new food post modal
   const [newFoodpostModal, setNewFoodpostModal] = useState(false);
+  
+  // Hook for displaying toast notifications
   const toast = useToast();
 
+  // Effect to fetch community and food posts data when component mounts or communityId changes
   useEffect(() => {
     if (communityId) {
+      // Fetch community data
       getCommunity(parseInt(communityId))
         .then((data) => setCommunity(data))
         .catch(() => {
@@ -58,6 +71,7 @@ const SingleCommunity = ({ user }: SingleCommunityProps) => {
     }
   }, [communityId, toast]);
 
+  // Show loading state if community data is not yet loaded
   if (!community) {
     return (
       <Container maxW="container.lg" py={6}>
@@ -68,14 +82,17 @@ const SingleCommunity = ({ user }: SingleCommunityProps) => {
     );
   }
 
+  // Render the community page
   return (
     <Container maxW="container.lg" py={6}>
       <VStack spacing={8} align="start">
+        {/* Display community name and ID */}
         <Box>
           <Heading as="h2">{community.name}</Heading>
           <Text>ID: {community.id}</Text>
         </Box>
 
+        {/* Display food posts */}
         <Box>
           <Heading as="h3">Food Posts</Heading>
           {foodPosts.length > 0 ? (
@@ -100,6 +117,8 @@ const SingleCommunity = ({ user }: SingleCommunityProps) => {
             <Text>No food posts available.</Text>
           )}
         </Box>
+        
+        {/* New food post section */}
         <Box>
           <Heading as="h3">New foodpost</Heading>
           <Button onClick={() => setNewFoodpostModal(true)}>New</Button>

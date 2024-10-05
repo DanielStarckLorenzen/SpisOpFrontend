@@ -1,3 +1,4 @@
+// Import necessary components and hooks from Chakra UI
 import {
   Box,
   Button,
@@ -9,8 +10,11 @@ import {
   useToast,
   SimpleGrid,
 } from '@chakra-ui/react';
+// Import Link for navigation
 import { Link } from 'react-router-dom';
+// Import React hooks
 import { useEffect, useState } from 'react';
+// Import types and API functions
 import { CommunityGroup, newCommunityGroup } from '../../types/Community.ts';
 import {
   getUserCommunities,
@@ -19,36 +23,48 @@ import {
 } from '../../api/communityApi.ts';
 import { User } from '../../types/User.ts';
 
+// Define props for the Communities component
 export type CommunitiesProps = {
   user: User;
 };
 
+// Communities component
 const Communities = ({ user }: CommunitiesProps) => {
+  // Get userId from session storage
   const userId = sessionStorage.getItem('userId')?.replace(/"/g, '');
+  // State for communities the user is a member of
   const [membershipCommunities, setMembershipCommunities] = useState<
     CommunityGroup[]
   >([]);
+  // State for communities owned by the user
   const [ownedCommunities, setOwnerCommunities] = useState<CommunityGroup[]>(
     []
   );
-  const toast = useToast(); // Chakra's toast for feedback
+  // Hook for displaying toast notifications
+  const toast = useToast();
 
+  // Effect to fetch user's communities on component mount
   useEffect(() => {
     if (!userId) {
       return;
     }
+    // Fetch communities user is a member of
     getUserCommunities(userId).then((data) => setMembershipCommunities(data));
+    // Fetch communities owned by the user
     getUserOwnedCommunities(userId).then((data) => setOwnerCommunities(data));
   }, [user, userId]);
 
+  // Object for creating a new community
   const communityGroup: newCommunityGroup = {
     name: 'Opgang',
     createdBy: user,
   };
 
+  // Function to create a new community
   const create = async () => {
     try {
       await createCommunity(communityGroup);
+      // Display success toast
       toast({
         title: 'Community created.',
         description: "Your community 'Opgang' has been created successfully.",
@@ -57,6 +73,7 @@ const Communities = ({ user }: CommunitiesProps) => {
         isClosable: true,
       });
     } catch {
+      // Display error toast if creation fails
       toast({
         title: 'Error',
         description: 'There was an issue creating the community.',
