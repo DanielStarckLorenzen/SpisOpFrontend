@@ -32,6 +32,8 @@ const Dashboard = () => {
     getAllFoodPosts().then((data) => setPosts(data));
   }, []);
 
+  console.log(posts);
+
   return (
     <Box minH="100vh" bg="gray.50">
       <Container maxW="container.xl" py={6}>
@@ -57,10 +59,10 @@ const Dashboard = () => {
                     >
                       <Flex justify="space-between" align="center">
                         <HStack>
-                          <Avatar src={post.image ?? ''} name="test" />
+                          <Avatar src={post.authorUser?.profilePicture ?? ''} name={post.authorUser?.firstName ?? post.autherCompany?.name} />
                           <VStack align="start">
                             <Heading size="sm">{post.title}</Heading>
-                            <Text fontSize="sm">No Data</Text>
+                            <Text fontSize="sm">{new Date(post.lastUpdated).toDateString()}</Text>
                           </VStack>
                         </HStack>
                         <Badge
@@ -84,7 +86,7 @@ const Dashboard = () => {
               <VStack spacing={4}>
                 {posts &&
                   posts
-                    .filter((post) => post.type === 'company')
+                    .filter((post) => post.autherCompany)
                     .map((post) => (
                       <Box
                         key={post.id}
@@ -96,15 +98,12 @@ const Dashboard = () => {
                         <Flex justify="space-between" align="center">
                           <HStack>
                             <Avatar
-                              src={post.image ?? ''}
-                              name={post.author.id ?? ''}
+                              name={post.autherCompany.name ?? ''}
                             />
                             <VStack align="start">
-                              <Heading size="sm">
-                                {post.author.id ?? ''}
-                              </Heading>
+                              <Heading size="sm">{post.title ?? ''}</Heading>
                               <Text fontSize="sm">
-                                {post.createdAt.toDateString() ?? 'No data'}
+                                {new Date(post.lastUpdated).toDateString() ?? 'No data'}
                               </Text>
                             </VStack>
                           </HStack>
@@ -129,7 +128,7 @@ const Dashboard = () => {
               <VStack spacing={4}>
                 {posts &&
                   posts
-                    .filter((post) => post.type === 'community')
+                    .filter((post) => post.authorUser)
                     .map((post) => (
                       <Box
                         key={post.id}
@@ -141,15 +140,15 @@ const Dashboard = () => {
                         <Flex justify="space-between" align="center">
                           <HStack>
                             <Avatar
-                              src={post.image ?? ''}
-                              name={post.author.id ?? ''}
+                              src={post.authorUser.profilePicture ?? ''}
+                              name={post.authorUser.firstName ?? ''}
                             />
                             <VStack align="start">
                               <Heading size="sm">
-                                {post.author.id ?? ''}
+                                {post.title?? ''}
                               </Heading>
                               <Text fontSize="sm">
-                                {post.createdAt.toDateString() ?? 'No data'}
+                                {new Date(post.lastUpdated).toDateString() ?? 'No data'}
                               </Text>
                             </VStack>
                           </HStack>

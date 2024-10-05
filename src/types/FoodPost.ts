@@ -7,10 +7,10 @@ export type FoodPost = {
   title: string;
   description: string;
   price: number;
-  author: User | Company;
-  createdAt: Date;
+  authorUser: User;
+  autherCompany: Company;
+  communityId: string;
   lastUpdated: Date;
-  type: 'company' | 'community';
 };
 
 export type newFoodPost = {
@@ -18,8 +18,8 @@ export type newFoodPost = {
   description: string;
   image: string;
   price: number;
-  author: User | Company;
-  type: 'company' | 'community';
+  authorUser: User;
+  authorCompany: Company;
   allergies?: string[];
   spaceId: number;
 };
