@@ -23,20 +23,15 @@ export const getFoodPostsByCommunity = async (id: number) => {
 
 // Create a new food post
 export const createFoodPost = async (foodPost: newFoodPost) => {
-  // Determine the appropriate URL based on the food post type
-  const URL = 'type' in foodPost && foodPost.type === 'company'
-      ? `${BASE_URL}/foodpost/company`
-      : `${BASE_URL}/foodpost/community`;
-  
   // Send POST request to create the food post
-  const response = await fetch(URL, {
+  const response = await fetch(`${BASE_URL}/foodpost`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(foodPost),
   });
-  
+
   // Check and return the response
   return checkResponse(response);
 };

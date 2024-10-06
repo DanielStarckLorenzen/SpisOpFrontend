@@ -74,10 +74,18 @@ const Dashboard = () => {
                       {/* Post header with author info and price */}
                       <Flex justify="space-between" align="center">
                         <HStack>
-                          <Avatar src={post.authorUser?.profilePicture ?? ''} name={post.authorUser?.firstName ?? post.autherCompany?.name} />
+                          <Avatar
+                            src={post.authorUser?.profilePicture ?? ''}
+                            name={
+                              post.authorUser?.firstName ??
+                              post.autherCompany?.name
+                            }
+                          />
                           <VStack align="start">
                             <Heading size="sm">{post.title}</Heading>
-                            <Text fontSize="sm">{new Date(post.lastUpdated).toDateString()}</Text>
+                            <Text fontSize="sm">
+                              {new Date(post.lastUpdated).toDateString()}
+                            </Text>
                           </VStack>
                         </HStack>
                         <Badge
@@ -117,13 +125,12 @@ const Dashboard = () => {
                         {/* Post header with company info and price */}
                         <Flex justify="space-between" align="center">
                           <HStack>
-                            <Avatar
-                              name={post.autherCompany.name ?? ''}
-                            />
+                            <Avatar name={post.autherCompany.name ?? ''} />
                             <VStack align="start">
                               <Heading size="sm">{post.title ?? ''}</Heading>
                               <Text fontSize="sm">
-                                {new Date(post.lastUpdated).toDateString() ?? 'No data'}
+                                {new Date(post.lastUpdated).toDateString() ??
+                                  'No data'}
                               </Text>
                             </VStack>
                           </HStack>
@@ -169,11 +176,10 @@ const Dashboard = () => {
                               name={post.authorUser.firstName ?? ''}
                             />
                             <VStack align="start">
-                              <Heading size="sm">
-                                {post.title?? ''}
-                              </Heading>
+                              <Heading size="sm">{post.title ?? ''}</Heading>
                               <Text fontSize="sm">
-                                {new Date(post.lastUpdated).toDateString() ?? 'No data'}
+                                {new Date(post.lastUpdated).toDateString() ??
+                                  'No data'}
                               </Text>
                             </VStack>
                           </HStack>
