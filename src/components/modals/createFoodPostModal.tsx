@@ -62,8 +62,8 @@ export function CreateFoodPostModal({
       description: formValues.description,
       image: formValues.image,
       price: formValues.price,
-      author: authorUser,
-      organization: organization,
+      authorUserId: authorUser.id,
+      organizationId: Number(organization.id),
     };
 
     // Call the API to create the food post

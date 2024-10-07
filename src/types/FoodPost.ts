@@ -18,7 +18,7 @@ export type newFoodPost = {
   description: string;
   image: string;
   price: number;
-  author: User;
-  organization: Organization;
+  authorUserId: string;
+  organizationId: number;
   allergies?: string[];
 };

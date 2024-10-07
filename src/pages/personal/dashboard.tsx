@@ -78,7 +78,7 @@ const Dashboard = () => {
                             src={post.authorUser?.profilePicture ?? ''}
                             name={
                               post.authorUser?.firstName ??
-                              post.autherCompany?.name
+                              post.organization?.name
                             }
                           />
                           <VStack align="start">
@@ -112,7 +112,7 @@ const Dashboard = () => {
               <VStack spacing={4}>
                 {posts &&
                   posts
-                    .filter((post) => post.autherCompany)
+                    .filter((post) => post.organization)
                     .map((post) => (
                       // Individual company post card
                       <Box
@@ -125,7 +125,7 @@ const Dashboard = () => {
                         {/* Post header with company info and price */}
                         <Flex justify="space-between" align="center">
                           <HStack>
-                            <Avatar name={post.autherCompany.name ?? ''} />
+                            <Avatar name={post.organization.name ?? ''} />
                             <VStack align="start">
                               <Heading size="sm">{post.title ?? ''}</Heading>
                               <Text fontSize="sm">
