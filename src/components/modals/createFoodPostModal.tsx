@@ -18,10 +18,11 @@ import {
 import { createFoodPost } from '../../api/foodPostApi.ts';
 import { User } from '../../types/User.ts';
 import { newFoodPost } from '../../types/FoodPost.ts';
+import { Organization } from '../../types/Organization.ts';
 
 // Define the props for the CreateFoodPostModal component
 export type CreateFoodPostModalProps = {
-  communityId: number;
+  organization: Organization;
   authorUser: User;
   isOpen: boolean;
   onClose: () => void;
@@ -29,7 +30,7 @@ export type CreateFoodPostModalProps = {
 
 // CreateFoodPostModal component
 export function CreateFoodPostModal({
-  communityId,
+  organization,
   authorUser,
   isOpen,
   onClose,
@@ -40,7 +41,6 @@ export function CreateFoodPostModal({
     description: '',
     image: '',
     price: 0,
-    allergies: '', // A comma-separated string of allergies
   });
 
   // Hook to display toast notifications
@@ -62,12 +62,8 @@ export function CreateFoodPostModal({
       description: formValues.description,
       image: formValues.image,
       price: formValues.price,
-      author: authorUser,
-      spaceId: communityId,
-      type: 'community',
-      allergies: formValues.allergies
-        .split(',')
-        .map((allergy) => allergy.trim()), // Convert comma-separated string to array
+      authorUserId: authorUser.id,
+      organizationId: Number(organization.id),
     };
 
     // Call the API to create the food post
@@ -142,16 +138,6 @@ export function CreateFoodPostModal({
               onChange={(e) =>
                 handleInputChange('price', parseFloat(e.target.value))
               }
-            />
-          </FormControl>
-
-          {/* Allergies input */}
-          <FormControl mb={4}>
-            <FormLabel>Allergies (comma-separated)</FormLabel>
-            <Input
-              placeholder="E.g. Nuts, Gluten"
-              value={formValues.allergies}
-              onChange={(e) => handleInputChange('allergies', e.target.value)}
             />
           </FormControl>
         </ModalBody>

@@ -1,5 +1,6 @@
 import { User } from './User.ts';
 import { Company } from './Company.ts';
+import { Organization } from './Organization.ts';
 
 export type FoodPost = {
   id: string;
@@ -8,8 +9,7 @@ export type FoodPost = {
   description: string;
   price: number;
   authorUser: User;
-  autherCompany: Company;
-  communityId: string;
+  organization: Organization;
   lastUpdated: Date;
 };
 
@@ -18,8 +18,7 @@ export type newFoodPost = {
   description: string;
   image: string;
   price: number;
-  authorUser: User;
-  authorCompany: Company;
+  authorUserId: string;
+  organizationId: number;
   allergies?: string[];
-  spaceId: number;
 };

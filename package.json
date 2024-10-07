@@ -21,6 +21,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
+    "spisopfrontend": "file:",
     "vite-plugin-env-compatible": "^2.0.1"
   },
   "devDependencies": {

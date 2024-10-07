@@ -23,7 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
-  
+
   // Hook for displaying toast notifications
   const toast = useToast();
 

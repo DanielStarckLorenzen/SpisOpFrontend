@@ -29,14 +29,14 @@ export type SingleCommunityProps = {
 const SingleCommunity = ({ user }: SingleCommunityProps) => {
   // Get the communityId from the URL parameters
   const { communityId } = useParams();
-  
+
   // State for storing community and food posts data
   const [community, setCommunity] = useState<CommunityGroup>();
   const [foodPosts, setFoodPosts] = useState<FoodPost[]>([]);
 
   // State for controlling the visibility of the new food post modal
   const [newFoodpostModal, setNewFoodpostModal] = useState(false);
-  
+
   // Hook for displaying toast notifications
   const toast = useToast();
 
@@ -117,14 +117,14 @@ const SingleCommunity = ({ user }: SingleCommunityProps) => {
             <Text>No food posts available.</Text>
           )}
         </Box>
-        
+
         {/* New food post section */}
         <Box>
           <Heading as="h3">New foodpost</Heading>
           <Button onClick={() => setNewFoodpostModal(true)}>New</Button>
           {newFoodpostModal && (
             <CreateFoodPostModal
-              communityId={parseInt(communityId as string)}
+              organization={community}
               authorUser={user}
               isOpen={newFoodpostModal}
               onClose={() => setNewFoodpostModal(false)}

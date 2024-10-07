@@ -43,7 +43,7 @@ function App() {
         {user ? (
           <>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/companies" element={<Companies />} />
+            <Route path="/companies" element={<Companies user={user} />} />
             <Route path="/community" element={<Communities user={user} />} />
             <Route path="/myProfile" element={<MyProfile user={user} />} />
             <Route
